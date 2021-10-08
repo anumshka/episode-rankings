@@ -53,11 +53,61 @@ public class EpisodeController extends HttpServlet {
 		
 		//list the episodes in MVC fashion
 		try {
-			listEpisodes(request,response);
+			
+			//read the command parameter
+			String cmd=request.getParameter("cmd");
+			
+			//if cmd is missing , then list 
+			
+			if(cmd == null)
+			{
+				cmd="LIST";
+			}
+			
+			//route to appopriate method
+			switch(cmd)
+			{
+			case "LIST":
+				listEpisodes(request,response);
+				break;
+			case "ADD":
+				addEpisodes(request,response);
+			default:
+				listEpisodes(request,response);
+			}
+			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}
+	}
+
+	private void addEpisodes(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		
+		
+		//read about episode from form
+		String epnum = request.getParameter("epno");
+		String season = request.getParameter("season");
+		String epname = request.getParameter("epname");
+		String rating = request.getParameter("rating");
+		
+		
+		
+		//create new episode
+		Episode newEp = new Episode(epnum,season,epname,rating);
+		
+		
+		//add episode
+		EpisodesDBUtil.addEpisode(newEp);
+		
+		
+		//get back to the main page (episode list)
+		listEpisodes(request, response);
+		
+		
+		
+
 	}
 
 	private void listEpisodes(HttpServletRequest request, HttpServletResponse response) 

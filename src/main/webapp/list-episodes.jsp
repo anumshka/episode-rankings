@@ -13,8 +13,8 @@
 
 
 <%
-		
-			List<Episode>episodes = (List<Episode>)  request.getAttribute("EPISODE_LIST");
+            @SuppressWarnings("unchecked")
+			List<Episode>episodes = (List<Episode>)request.getAttribute("EPISODE_LIST");
 
 %>
 <body style="background-color:#9933CC; margin-top: 20px;">
@@ -22,8 +22,11 @@
 
 <div class="container"   >
 			
-			<div id = "content">
+			<div id = "content" >
 			
+		    <button type="button" value="Add" 
+		    onclick="window.location.href='add-rating.jsp' ; return  false;"
+		    class="btn btn-secondary btn-sm" style="margin: 10px;">Want to rate ?</button>
 			<table  class="table table-primary table-striped">
 			
 			<tr>

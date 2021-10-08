@@ -2,29 +2,29 @@ package com.anushka.web.jdbc;
 
 public class Episode {
 	
-	private int epnum;
-	private int season;
+	private String epnum;
+	private String season;
 	private String epname;
-	private int rating ;
+	private String rating ;
 	
 	@Override
 	public String toString() {
 		return "Episode [epnum=" + epnum + ", season=" + season + ", epname=" + epname + ", rating=" + rating + "]";
 	}
 
-	public int getEpnum() {
+	public String getEpnum() {
 		return epnum;
 	}
 
-	public void setEpnum(int epnum) {
+	public void setEpnum(String epnum) {
 		this.epnum = epnum;
 	}
 
-	public int getSeason() {
+	public String getSeason() {
 		return season;
 	}
 
-	public void setSeason(int season) {
+	public void setSeason(String season) {
 		this.season = season;
 	}
 
@@ -36,15 +36,15 @@ public class Episode {
 		this.epname = epname;
 	}
 
-	public int getRating() {
+	public String getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(String rating) {
 		this.rating = rating;
 	}
 
-	public Episode(int epnum, int season, String epname, int rating) {
+	public Episode(String epnum, String season, String epname, String rating) {
 	
 		this.epnum = epnum;
 		this.season = season;

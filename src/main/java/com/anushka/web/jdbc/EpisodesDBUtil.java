@@ -11,7 +11,7 @@ import org.apache.catalina.manager.DummyProxySession;
 
 public class EpisodesDBUtil {
 
-	private DataSource dataSource;
+	private static DataSource dataSource;
 
 	public EpisodesDBUtil(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -41,10 +41,10 @@ public class EpisodesDBUtil {
 			while (myRs.next()) {
 
 				// Retrieve data from result set row
-				int epnum = myRs.getInt("epnum");
-				int season = myRs.getInt("season");
+				String epnum = myRs.getString("epnum");
+				String season = myRs.getString("season");
 				String epname = myRs.getString("epname");
-				int rating = myRs.getInt("rating");
+				String rating = myRs.getString("rating");
 
 				// Create a new episode
 				Episode temp = new Episode(epnum, season, epname, rating);
@@ -64,7 +64,7 @@ public class EpisodesDBUtil {
 	}
 
 	// Puts back in the connection pool
-	private void close(Connection myCn, Statement mySm, ResultSet myRs) {
+	private static void close(Connection myCn, Statement mySm, ResultSet myRs) {
 		// TODO Auto-generated method stub
 		try {
 			if (myRs != null) {
@@ -81,6 +81,42 @@ public class EpisodesDBUtil {
 			e.printStackTrace();
 		}
 
+	}
+
+	public static void addEpisode(Episode newEp) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Connection myCn = null;
+		PreparedStatement mySt = null;
+		try {
+			
+		//get db connection
+		myCn = dataSource.getConnection();
+			
+		//create sql for insert
+		String sql = "INSERT INTO Episodes(epnum,season,epname,rating) VALUES(?,?,?,?)"; 
+		
+	    mySt = myCn.prepareStatement(sql);
+		//set the param values for the student 
+		
+	    mySt.setString(1, newEp.getEpnum());
+	    mySt.setString(2, newEp.getSeason());
+	    mySt.setString(3, newEp.getEpname());
+	    mySt.setString(4, newEp.getRating());
+		
+		
+		
+		
+		//execute sql insert
+	    mySt.execute();
+			
+		}
+		//clean up jdbc objects
+		finally {
+			close(myCn, mySt, null);
+		}
+		
+		
 	}
 
 }
